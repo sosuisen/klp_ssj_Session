@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class MessageServlet
  */
-@WebServlet(urlPatterns = { "/message", "/clear" })
+@WebServlet("/message")
 public class MessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,14 +35,6 @@ public class MessageServlet extends HttpServlet {
 			session.setAttribute("history", new ArrayList<String>());
 		}
 
-		// 発展課題 4-1a
-		// ArrayListのクリア
-		String path = request.getServletPath();
-		if (path.equals("/clear")) {
-			ArrayList<String> list = (ArrayList<String>) session.getAttribute("history");
-			list.clear();
-		}
-
 		request.getRequestDispatcher("/WEB-INF/message.jsp").forward(request, response);
 	}
 
@@ -56,20 +48,11 @@ public class MessageServlet extends HttpServlet {
 		String message = request.getParameter("message");
 		HttpSession session = request.getSession();
 
-		// 発展課題 4-1b。doPostでもなくなったセッションの初期化が必要となる。
+		ArrayList<String> list = (ArrayList<String>) session.getAttribute("history");
+		list.add(message);
 
-		if (session.getAttribute("history") == null) {
-			session.setAttribute("history", new ArrayList<String>());
-		}
-		session.setMaxInactiveInterval(10);
-
-		if (session.getAttribute("history") != null) {
-			ArrayList<String> list = (ArrayList<String>) session.getAttribute("history");
-			list.add(message);
-		}
 		request.getRequestDispatcher(
 				"/WEB-INF/message.jsp").forward(request, response);
-
 	}
 
 }
