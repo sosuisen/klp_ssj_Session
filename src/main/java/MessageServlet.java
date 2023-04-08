@@ -35,7 +35,7 @@ public class MessageServlet extends HttpServlet {
 			session.setAttribute("history", new ArrayList<String>());
 		}
 
-		// 発展課題 4-1a
+		// 発展課題 4a
 		// ArrayListのクリア
 		String path = request.getServletPath();
 		if (path.equals("/clear")) {
@@ -56,20 +56,12 @@ public class MessageServlet extends HttpServlet {
 		String message = request.getParameter("message");
 		HttpSession session = request.getSession();
 
-		// 発展課題 4-1b。doPostでもなくなったセッションの初期化が必要となる。
-
-		if (session.getAttribute("history") == null) {
-			session.setAttribute("history", new ArrayList<String>());
-		}
-		session.setMaxInactiveInterval(10);
-
 		if (session.getAttribute("history") != null) {
 			ArrayList<String> list = (ArrayList<String>) session.getAttribute("history");
 			list.add(message);
 		}
 		request.getRequestDispatcher(
 				"/WEB-INF/message.jsp").forward(request, response);
-
 	}
 
 }
