@@ -9,16 +9,17 @@
 </head>
 <body>
 	<form action="message" method="POST">
-		メッセージ入力 <input type="text" name="message"><input type="submit">
+		メッセージ入力 <input type="text" name="message">
+		<button>送信</button>
 	</form>
 	<hr>
 	<h1>メッセージ一覧</h1>
 	<br>
 	<%
 	ArrayList<String> list = (ArrayList<String>) session.getAttribute("history");
-		for (int i = 0; i < list.size(); i++) {
+	for (String mes : list) {
 	%>
-	<%=list.get(i)%><br>
+	<%=mes%><br>
 	<%
 	}
 	%>
