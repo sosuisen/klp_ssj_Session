@@ -14,19 +14,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = { "/message", "/clear" })
 public class MessageServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public MessageServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -52,14 +40,12 @@ public class MessageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
 		String message = request.getParameter("message");
-		HttpSession session = request.getSession();
 
-		if (session.getAttribute("history") != null) {
-			ArrayList<String> list = (ArrayList<String>) session.getAttribute("history");
-			list.add(message);
-		}
+		HttpSession session = request.getSession();
+		ArrayList<String> list = (ArrayList<String>) session.getAttribute("history");
+		list.add(message);
+
 		request.getRequestDispatcher(
 				"/WEB-INF/message.jsp").forward(request, response);
 	}
