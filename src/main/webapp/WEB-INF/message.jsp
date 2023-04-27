@@ -21,6 +21,7 @@
 	<h1>メッセージ一覧</h1>
 	<br>
 	<%
+	// 残念ながら JSPでは var による宣言を使えません。
 	ArrayList<MessageBean> list = (ArrayList<MessageBean>) session.getAttribute("history");
 	for (MessageBean mes : list) {
 	%>
